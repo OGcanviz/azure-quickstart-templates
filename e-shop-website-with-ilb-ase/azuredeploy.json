@@ -468,7 +468,7 @@
     },
     {
       "apiVersion": "2017-05-10",
-      "name": "jenkinsDeployment",
+      "name": "aseDeployment",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]"
@@ -911,7 +911,7 @@
     },
     "adminAppURL": {
       "type": "string",
-      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', variables('adminAppName'))).defaultHostName)]"
+      "value": "[reference('aseDeployment').outputs.adminAppURL.value]"
     }
   }
 }
