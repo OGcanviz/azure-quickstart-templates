@@ -110,6 +110,44 @@
     {
       "apiVersion": "2016-03-01",
       "type": "Microsoft.Web/sites",
+      "name": "[parameters('contentAppName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "name": "[parameters('contentAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]",
+        "hostingEnvironment": "[parameters('aseName')]",
+        "siteConfig": {
+          "alwaysOn": true,
+          "appSettings": [
+            {
+              "name": "project",
+              "value": "e-shop-website-with-ilb-ase/src/Web/wwwroot"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "properties": {
+            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "branch": "[parameters('sourceCodeBranch')]",
+            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', parameters('contentAppName'))]"
+          ]
+        }
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]"
+      ]
+    },
+    {
+      "apiVersion": "2016-03-01",
+      "type": "Microsoft.Web/sites",
       "name": "[parameters('webAppName')]",
       "location": "[parameters('location')]",
       "properties": {
@@ -180,51 +218,14 @@
             "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
           },
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites/', parameters('webAppName'))]"
+            "[resourceId('Microsoft.Web/sites/', parameters('webAppName'))]",
+            "[resourceId('Microsoft.Web/sites/sourcecontrols/', parameters('contentAppName'), 'web')]"
           ]
         }
       ],
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]",
         "[resourceId('Microsoft.Web/sites/', parameters('apiAppName'))]"
-      ]
-    },
-    {
-      "apiVersion": "2016-03-01",
-      "type": "Microsoft.Web/sites",
-      "name": "[parameters('contentAppName')]",
-      "location": "[parameters('location')]",
-      "properties": {
-        "name": "[parameters('contentAppName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]",
-        "hostingEnvironment": "[parameters('aseName')]",
-        "siteConfig": {
-          "alwaysOn": true,
-          "appSettings": [
-            {
-              "name": "project",
-              "value": "e-shop-website-with-ilb-ase/src/Web/wwwroot"
-            }
-          ]
-        }
-      },
-      "resources": [
-        {
-          "apiVersion": "2015-08-01",
-          "name": "web",
-          "type": "sourcecontrols",
-          "properties": {
-            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
-            "branch": "[parameters('sourceCodeBranch')]",
-            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
-          },
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/sites/', parameters('contentAppName'))]"
-          ]
-        }
-      ],
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]"
       ]
     },
     {
