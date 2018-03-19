@@ -841,7 +841,7 @@
               {
                 "name": "WebApp",
                 "properties": {
-                  "hostName": "[reference(resourceId('Microsoft.Web/sites/', variables('contentAppName'))).defaultHostName]"
+                  "hostName": "[reference(reference('aseDeployment').outputs.contentAppId.value).defaultHostName]"
                 }
               }
             ],
@@ -858,7 +858,7 @@
             ],
             "optimizationType": "GeneralWebDelivery",
             "probePath": null,
-            "originHostHeader": "[reference(concat(reference('aseDeployment').outputs.webAppId.value, '/web')).defaultHostName]"
+            "originHostHeader": "[reference(reference('aseDeployment').outputs.webAppId.value).defaultHostName]"
           },
           "dependsOn": [
             "[resourceId('microsoft.cdn/profiles/', variables('cdnName'))]",
@@ -911,7 +911,7 @@
     },
     "adminAppURL": {
       "type": "string",
-      "value": "[concat('https://', reference(concat(reference('aseDeployment').outputs.webAppId.value, '/web')).defaultHostName)]"
+      "value": "[concat('https://', reference(reference('aseDeployment').outputs.webAppId.value).defaultHostName)]"
     }
   }
 }
