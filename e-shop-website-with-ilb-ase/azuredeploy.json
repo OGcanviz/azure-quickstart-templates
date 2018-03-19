@@ -853,7 +853,7 @@
               {
                 "name": "WebApp",
                 "properties": {
-                  "hostName": "reference('aseDeployment').outputs.contentAppDefaultHostName.value"
+                  "hostName": "[reference('aseDeployment').outputs.contentAppDefaultHostName.value]"
                 }
               }
             ],
@@ -870,7 +870,7 @@
             ],
             "optimizationType": "GeneralWebDelivery",
             "probePath": null,
-            "originHostHeader": "reference('aseDeployment').outputs.contentAppDefaultHostName.value"
+            "originHostHeader": "[reference('aseDeployment').outputs.contentAppDefaultHostName.value]"
           },
           "dependsOn": [
             "[resourceId('microsoft.cdn/profiles/', variables('cdnName'))]",
