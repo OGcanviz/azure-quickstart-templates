@@ -218,8 +218,7 @@
             "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
           },
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites/', parameters('webAppName'))]",
-            "[resourceId('Microsoft.Web/sites/sourcecontrols/', parameters('contentAppName'), 'web')]"
+            "[resourceId('Microsoft.Web/sites/', parameters('webAppName'))]"
           ]
         }
       ],
@@ -340,17 +339,17 @@
     }
   ],
   "outputs": {
-    "webAppId": {
+    "contentAppDefaultHostName": {
       "type": "string",
-      "value": "[resourceId('Microsoft.Web/sites/', parameters('webAppName'))]"
+      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', parameters('contentAppName'))).defaultHostName)]"
     },
-    "contentAppId": {
+    "webAppDefaultHostName": {
       "type": "string",
-      "value": "[resourceId('Microsoft.Web/sites/', parameters('contentAppName'))]"
+      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', parameters('webAppName'))).defaultHostName)]"
     },
-    "adminAppId": {
+    "adminAppDefaultHostName": {
       "type": "string",
-      "value": "[resourceId('Microsoft.Web/sites/', parameters('adminAppName'))]"
+      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', parameters('adminAppName'))).defaultHostName)]"
     }
   }
 }
