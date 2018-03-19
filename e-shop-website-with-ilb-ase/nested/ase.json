@@ -341,15 +341,15 @@
   "outputs": {
     "contentAppDefaultHostName": {
       "type": "string",
-      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', parameters('contentAppName'))).defaultHostName)]"
+      "value": "reference(resourceId('Microsoft.Web/sites/', parameters('contentAppName'))).defaultHostName]"
     },
     "webAppDefaultHostName": {
       "type": "string",
-      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', parameters('webAppName'))).defaultHostName)]"
+      "value": "[reference(resourceId('Microsoft.Web/sites/', parameters('webAppName'))).defaultHostName]"
     },
     "adminAppDefaultHostName": {
       "type": "string",
-      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', parameters('adminAppName'))).defaultHostName)]"
+      "value": "[reference(resourceId('Microsoft.Web/sites/', parameters('adminAppName'))).defaultHostName]"
     }
   }
 }
