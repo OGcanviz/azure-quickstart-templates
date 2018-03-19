@@ -341,7 +341,7 @@
   "outputs": {
     "contentAppDefaultHostName": {
       "type": "string",
-      "value": "reference(resourceId('Microsoft.Web/sites/', parameters('contentAppName'))).defaultHostName]"
+      "value": "[reference(resourceId('Microsoft.Web/sites/', parameters('contentAppName'))).defaultHostName]"
     },
     "webAppDefaultHostName": {
       "type": "string",
