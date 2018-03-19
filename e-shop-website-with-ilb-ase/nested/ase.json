@@ -133,7 +133,7 @@
             },
             {
               "name": "ApplicationInsights:InstrumentationKey",
-              "value": "[reference(resourceId(resourceGroup().name, 'microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
+              "value": "[reference(resourceId(resourceGroup().name, '/microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
             },
             {
               "name": "project",
@@ -186,7 +186,7 @@
       ],
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]",
-        "[resourceId(resourceGroup().name, 'microsoft.insights/components/', parameters('appInsightsName'))]",
+        "[resourceId(resourceGroup().name, '/microsoft.insights/components/', parameters('appInsightsName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
         "[resourceId('Microsoft.Cache/Redis/', parameters('redisCacheName'))]",
         "[resourceId('Microsoft.Web/sites/', parameters('apiAppName'))]"
@@ -244,7 +244,7 @@
           "appSettings": [
             {
               "name": "ApplicationInsights:InstrumentationKey",
-              "value": "[reference(resourceId(resourceGroup().name, 'microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
+              "value": "[reference(resourceId(resourceGroup().name, '/microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
             },
             {
               "name": "project",
@@ -278,7 +278,7 @@
       ],
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]",
-        "[resourceId(resourceGroup().name, 'microsoft.insights/components/', parameters('appInsightsName'))]"
+        "[resourceId(resourceGroup().name, '/microsoft.insights/components/', parameters('appInsightsName'))]"
       ]
     },
     {
@@ -311,7 +311,7 @@
             },
             {
               "name": "ApplicationInsights:InstrumentationKey",
-              "value": "[reference(resourceId(resourceGroup().name, 'microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
+              "value": "[reference(resourceId(resourceGroup().name, '/microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
             },
             {
               "name": "project",
@@ -338,7 +338,7 @@
       ],
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms/', parameters('aspName'))]",
-        "[resourceId(resourceGroup().name, 'microsoft.insights/components/', parameters('appInsightsName'))]",
+        "[resourceId(resourceGroup().name, '/microsoft.insights/components/', parameters('appInsightsName'))]",
         "[resourceId('Microsoft.Web/sites/', parameters('apiAppName'))]"
       ]
     }
