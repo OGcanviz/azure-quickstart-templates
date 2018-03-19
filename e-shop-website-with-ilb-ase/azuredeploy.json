@@ -483,7 +483,7 @@
           "aseName": {
             "value": "[parameters('aseName')]"
           },
-          "aseLocation": {
+          "location": {
             "value": "[parameters('aseLocation')]"
           },
           "sqlServerName": {
@@ -510,8 +510,20 @@
           "redisCacheName": {
             "value": "[variables('redisCacheName')]"
           },
+          "aspName": {
+            "value": "[variables('aspName')]"
+          },
           "webAppName": {
             "value": "[variables('webAppName')]"
+          },
+          "contentAppName": {
+            "value": "[variables('contentAppName')]"
+          },
+          "apiAppName": {
+            "value": "[variables('apiAppName')]"
+          },
+          "adminAppName": {
+            "value": "[variables('adminAppName')]"
           },
           "azureAdTenantId": {
             "value": "[parameters('azureAdTenantId')]"
@@ -841,7 +853,7 @@
               {
                 "name": "WebApp",
                 "properties": {
-                  "hostName": "[reference(reference('aseDeployment').outputs.contentAppId.value).defaultHostName]"
+                  "hostName": "[reference('aseDeployment').outputs.contentAppId.value]"
                 }
               }
             ],
@@ -858,11 +870,11 @@
             ],
             "optimizationType": "GeneralWebDelivery",
             "probePath": null,
-            "originHostHeader": "[reference(reference('aseDeployment').outputs.webAppId.value).defaultHostName]"
+            "originHostHeader": "[reference('aseDeployment').outputs.webAppId.value]"
           },
           "dependsOn": [
             "[resourceId('microsoft.cdn/profiles/', variables('cdnName'))]",
-            "[concat(reference('aseDeployment').outputs.webAppId.value, '/web')]"
+            "[resourceId('Microsoft.Resources/deployments/', 'aseDeployment')]"
           ]
         },
         {
@@ -905,13 +917,5 @@
     }
   ],
   "outputs": {
-    "webAppURL": {
-      "type": "string",
-      "value": "[concat('http://', reference(variables('appGatewayPublicIPName')).dnsSettings.fqdn)]"
-    },
-    "adminAppURL": {
-      "type": "string",
-      "value": "[concat('https://', reference(reference('aseDeployment').outputs.webAppId.value).defaultHostName)]"
-    }
   }
 }
