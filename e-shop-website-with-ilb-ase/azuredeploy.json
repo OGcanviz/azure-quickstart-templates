@@ -858,11 +858,11 @@
             ],
             "optimizationType": "GeneralWebDelivery",
             "probePath": null,
-            "originHostHeader": "[reference(resourceId('Microsoft.Web/sites/', variables('webAppName'))).defaultHostName]"
+            "originHostHeader": "[reference(concat(reference('aseDeployment').outputs.webAppId.value, '/web')).defaultHostName]"
           },
           "dependsOn": [
             "[resourceId('microsoft.cdn/profiles/', variables('cdnName'))]",
-            "[resourceId('Microsoft.Web/sites/sourcecontrols/', variables('webAppName'), 'web')]"
+            "[concat(reference('aseDeployment').outputs.webAppId.value, '/web')]"
           ]
         },
         {
@@ -911,7 +911,7 @@
     },
     "adminAppURL": {
       "type": "string",
-      "value": "[reference('aseDeployment').outputs.adminAppURL.value]"
+      "value": "[concat('https://', reference(concat(reference('aseDeployment').outputs.webAppId.value, '/web')).defaultHostName)]"
     }
   }
 }

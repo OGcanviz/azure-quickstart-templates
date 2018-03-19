@@ -344,6 +344,18 @@
     }
   ],
   "outputs": {
+    "webAppId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Web/sites/', parameters('webAppName'))]"
+    },
+    "contentAppId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Web/sites/', parameters('contentAppName'))]"
+    },
+    "adminAppId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Web/sites/', parameters('adminAppName'))]"
+    },
     "adminAppURL": {
       "type": "string",
       "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites/', parameters('adminAppName'))).defaultHostName)]"
