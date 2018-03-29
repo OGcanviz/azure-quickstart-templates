@@ -2,11 +2,17 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "aseName": {
-      "value": "GEN-UNIQUE-16"
+    "existingASEName": {
+      "value": "GET-PREREQ-existingASEName"
     },
-    "aseLocation": {
-      "value": "West US"
+    "existingASELocation": {
+      "value": "GET-PREREQ-existingASELocation"
+    },
+    "existingASEDNSSuffix": {
+      "value": "GET-PREREQ-existingASEDNSSuffix"
+    },
+    "dnsSuffix": {
+      "value": "contoso.com"
     },
     "sqlServerAdministratorLogin": {
       "value": "GEN-UNIQUE"
@@ -19,15 +25,6 @@
     },
     "azureAdClientId": {
       "value": "GEN-UNIQUE"
-    },
-    "sourceCodeRepositoryURL": {
-      "value": "https://github.com/OGCanviz/azure-quickstart-templates"
-    },
-    "sourceCodeBranch": {
-      "value": "lob-solution-with-ase"
-    },
-    "sourceCodeManualIntegration": {
-      "value": true
     }
   }
 }
