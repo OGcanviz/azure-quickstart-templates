@@ -9,7 +9,7 @@
 [Deploy Azure Resources with ARM Templates](#deploy-azure-resources-with-arm-templates)
 
 * [Create a new App Service Environment](#create-a-new-app-service-environment)
-* [Create App Registrations in Azure Active Directory (AAD)](#create-app-registrations-in-azure-active-directory-aad)
+* [Create App Registration in Azure Active Directory (AAD)](#create-app-registration-in-azure-active-directory-aad)
 * [Deploy the Other Azure Resources](#deploy-the-other-azure-resources)
 
 [Follow-up Steps](#follow-up-steps)
@@ -18,12 +18,15 @@
 * [Get ASE ILB IP address](#get-ase-ilb-ip-address)
 
 
-* [Add DNS Records](#Add DNS Records)
+* [Add DNS Records](#add-dns-records)
 
 
 * [Add Reply URL to the Admin Web App](#add-reply-url-to-the-admin-web-app)
 
 [Access Deployed Resources](#access-deployed-resources)
+
+* [Web App](#web-app)
+* [Admin App](#admin-app)
 
 ## Architecture
 
