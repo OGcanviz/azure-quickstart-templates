@@ -71,14 +71,14 @@ It takes about 70 minutes to create a new App Service Environment in Azure.
 
      > **Note:** 
      >
-     > * This value is also used to name other Azure resources created by the ARM template. To avoid naming conflicts, please choose a unique name, for example: **tyler-eshop-180308**.
-     > * This value is also used as the subdomain name. Please only user lowercase characters, numbers and dash(-).
+     > * This value is also used to name other Azure resources created by the ARM template. To avoid naming conflicts, please choose a unique name, for example **tyler-eshop-180308**.
+     > * This value is also used as the subdomain name. Please only use lowercase characters, numbers, and dash(-).
 
    - **Location**: choose the same location as the location of the resource group.
 
      > **Note:** This parameter was added because of this [issue](https://github.com/Azure/azure-quickstart-templates/issues/2828).
 
-   - **Dns Suffix**:  input the internal domain name, for example `contoso-internal.com` 
+   - **DNS Suffix**:  input the internal domain name, for example `contoso-internal.com` 
 
    **Terms and conditions**:
 
@@ -182,7 +182,7 @@ After the deployment finishes, you will see the URLs of the Web App and Admin Ap
 
 * **Web App URL**: URL used to access the Web App
 * **Admin App URL**: URL used to access the Admin App
-* **Admin App Redirect URL**: Admin App OAuth redirect URL which will be add to Reply URLs of the App Registration later.
+* **Admin App Redirect URL**: Admin App OAuth redirect URL which will be added to Reply URLs of the App Registration later.
 * **App Gateway Public IP FQDN**: Fully qualified domain name of the Application Gateway Public IP Address which will be used as the value of external domain CNAME records.
 
 > **Note**: the deployment window shown above can be re-opened by clicking the **Deployments** tab in the resource group.
@@ -195,7 +195,7 @@ Open the App Service Environment, then click **IP addresses**.
 
 ![](images/ase-ilb-ip-address.png)
 
-Copy aside the value of **Internal Local Balancer IP address**. It will be used as the value of internal domain A records.
+Copy the value of **Internal Local Balancer IP address** and save it in a text file. It will be used as the value of internal domain A records.
 
 ### Add DNS Records
 
