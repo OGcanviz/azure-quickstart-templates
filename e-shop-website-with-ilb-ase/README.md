@@ -38,8 +38,6 @@ Download the Visio diagram [here](/e-shop-website-with-ilb-ase/architecture.vsdx
 
 ![](images/architecture-overview.png)
 
-
-
 The eShop website is deployed on internal-load-balanced App Service Environment (ILB ASE) within a virtual network. The public website is further secured by application gateway. Its content and product images are served by Azure CDN for better performance.
 
 ​	A. Customer accesses the public website in browser.
