@@ -1,0 +1,8 @@
+{
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "itemDisplayName": "Branded website",
+  "description": "Start simple with the content management system that enables you to easily maintain the messaging on your website in real-time, from a browser, with no coding skills.",
+  "summary": "Start simple with the content management system that enables you to easily maintain the messaging on your website in real-time, from a browser, with no coding skills.",
+  "githubUsername": "alexchx",
+  "dateUpdated": "2018-07-12"
+}
