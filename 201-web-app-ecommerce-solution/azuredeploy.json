@@ -19,20 +19,6 @@
       "metadata": {
         "description": "The admin password for the database, it must meet the complexity requirements."
       }
-    },
-    "repositoryUrl": {
-      "type": "string",
-      "defaultValue": "https://github.com/Azure/azure-quickstart-templates",
-      "metadata": {
-        "description": "GitHub repository URL for the source code."
-      }
-    },
-    "branch": {
-      "type": "string",
-      "defaultValue": "master",
-      "metadata": {
-        "description": "GitHub repository branch for the source code."
-      }
     }
   },
   "variables": {
@@ -48,7 +34,8 @@
     "cdnEndpointOriginName": "[concat(parameters('namePrefix'), uniqueString(resourceGroup().id), 'CDNOrigin')]",
     "storageAccountName": "[concat(variables('namePrefixLower'), uniqueString(resourceGroup().id))]",
     "funcAppName": "[concat(parameters('namePrefix'), uniqueString(resourceGroup().id), 'OrderProcessing')]",
-    "_solutionFolder": "201-web-app-ecommerce-solution"
+    "repositoryUrl": "https://github.com/CanvizTheodoreShi/eShopOnWeb20180105",
+    "branch": "master"
   },
   "resources": [
     {
@@ -98,14 +85,14 @@
       "resources": [
         {
           "apiVersion": "2016-08-01",
-          "type": "config",
           "name": "appsettings",
+          "type": "config",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites/', variables('cdnWebName'))]"
           ],
           "properties": {
-            "SourceCodeRepositoryUrl": "[parameters('repositoryUrl')]",
-            "project": "[concat(variables('_solutionFolder'), '/src/CDNWeb/CDNWeb.csproj')]"
+            "SourceCodeRepositoryUrl": "[variables('repositoryUrl')]",
+            "project": "/src/CDNWeb/CDNWeb.csproj"
           }
         },
         {
@@ -117,35 +104,38 @@
             "[resourceId('Microsoft.Web/sites/config', variables('cdnWebName'), 'appsettings')]"
           ],
           "properties": {
-            "RepoUrl": "[parameters('repositoryUrl')]",
-            "branch": "[parameters('branch')]",
+            "RepoUrl": "[variables('repositoryUrl')]",
+            "branch": "[variables('branch')]",
             "IsManualIntegration": true
           }
         }
       ]
     },
     {
+      "apiVersion": "2017-04-02",
       "name": "[variables('cdnProfileName')]",
       "type": "Microsoft.Cdn/profiles",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2017-04-02",
       "tags": {
         "displayName": "CdnProfile"
       },
       "sku": {
         "name": "Standard_Verizon"
       },
-      "properties": {},
       "resources": [
         {
+          "apiVersion": "2017-04-02",
           "name": "[variables('cdnEndpointName')]",
           "type": "endpoints",
-          "apiVersion": "2017-04-02",
           "location": "[resourceGroup().location]",
           "tags": {
             "displayName": "CdnEndpoints"
           },
           "scale": null,
+          "dependsOn": [
+            "[resourceId('Microsoft.Cdn/profiles', variables('cdnProfileName'))]",
+            "[resourceId('Microsoft.Web/sites', variables('cdnWebName'))]"
+          ],
           "properties": {
             "originHostHeader": "[reference(variables('cdnWebName')).hostNames[0]]",
             "isHttpAllowed": true,
@@ -163,18 +153,14 @@
             ],
             "contentTypesToCompress": [],
             "isCompressionEnabled": false
-          },
-          "dependsOn": [
-            "[resourceId('Microsoft.Cdn/profiles', variables('cdnProfileName'))]",
-            "[resourceId('Microsoft.Web/sites', variables('cdnWebName'))]"
-          ]
+          }
         }
       ]
     },
     {
+      "apiVersion": "2017-10-01",
       "name": "[variables('redisCacheName')]",
       "type": "Microsoft.Cache/Redis",
-      "apiVersion": "2017-10-01",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "RedisCache"
@@ -197,15 +183,15 @@
       }
     },
     {
-      "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2017-10-01",
+      "name": "[variables('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "kind": "Storage",
       "sku": {
         "name": "Standard_RAGRS",
         "tier": "Standard"
       },
-      "kind": "Storage",
-      "name": "[variables('storageAccountName')]",
-      "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "StorageAccounts"
       },
@@ -232,10 +218,10 @@
       }
     },
     {
+      "apiVersion": "2015-05-01-preview",
       "name": "[variables('sqlServerName')]",
       "type": "Microsoft.Sql/servers",
       "location": "[resourceGroup().location]",
-      "apiVersion": "2015-05-01-preview",
       "tags": {
         "displayName": "SqlServer"
       },
@@ -245,10 +231,10 @@
       },
       "resources": [
         {
+          "apiVersion": "2015-05-01-preview",
           "name": "eShopCatalogDb",
           "type": "databases",
           "location": "[resourceGroup().location]",
-          "apiVersion": "2015-05-01-preview",
           "tags": {
             "displayName": "Database"
           },
@@ -261,10 +247,10 @@
           }
         },
         {
+          "apiVersion": "2015-05-01-preview",
           "name": "eShopIdentity",
           "type": "databases",
           "location": "[resourceGroup().location]",
-          "apiVersion": "2015-05-01-preview",
           "tags": {
             "displayName": "Database"
           },
@@ -277,10 +263,10 @@
           }
         },
         {
-          "type": "firewallrules",
           "apiVersion": "2015-05-01-preview",
-          "location": "[resourceGroup().location]",
           "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
           ],
@@ -315,8 +301,8 @@
       "resources": [
         {
           "apiVersion": "2016-08-01",
-          "type": "config",
           "name": "connectionstrings",
+          "type": "config",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites/', variables('webSiteName'))]"
           ],
@@ -337,8 +323,8 @@
         },
         {
           "apiVersion": "2016-08-01",
-          "type": "config",
           "name": "appsettings",
+          "type": "config",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites/', variables('webSiteName'))]"
           ],
@@ -346,8 +332,8 @@
             "CDNRoot": "[concat('https://', reference(resourceId('Microsoft.Cdn/profiles/endpoints', variables('cdnProfileName'), variables('cdnEndpointName'))).hostName)]",
             "CacheConnection": "[concat(reference(resourceId('Microsoft.Cache/redis', variables('redisCacheName'))).hostName, ':', reference(resourceId('Microsoft.Cache/redis', variables('redisCacheName'))).sslPort, ',password=', listkeys(resourceId('Microsoft.Cache/redis', variables('redisCacheName')), providers('Microsoft.Cache', 'redis').apiVersions[0]).primaryKey, ',ssl=True,abortConnect=False,syncTimeout=2000,allowAdmin=true')]",
             "ApplicationInsights:InstrumentationKey": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightName')), '2014-04-01').InstrumentationKey]",
-            "SourceCodeRepositoryUrl": "[parameters('repositoryUrl')]",
-            "project": "[concat(variables('_solutionFolder'), '/src/Web/Web.csproj')]"
+            "SourceCodeRepositoryUrl": "[variables('repositoryUrl')]",
+            "project": "/src/Web/Web.csproj"
           }
         },
         {
@@ -360,8 +346,8 @@
             "[resourceId('Microsoft.Web/sites/config', variables('webSiteName'), 'connectionstrings')]"
           ],
           "properties": {
-            "RepoUrl": "[parameters('repositoryUrl')]",
-            "branch": "[parameters('branch')]",
+            "RepoUrl": "[variables('repositoryUrl')]",
+            "branch": "[variables('branch')]",
             "IsManualIntegration": true
           }
         }
@@ -388,7 +374,7 @@
             },
             {
               "name": "Project",
-              "value": "[concat(variables('_solutionFolder'), '/src/FunctionApp')]"
+              "value": "/src/FunctionApp"
             }
           ]
         }
@@ -411,8 +397,8 @@
         },
         {
           "apiVersion": "2016-08-01",
-          "type": "config",
           "name": "connectionstrings",
+          "type": "config",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites/', variables('funcAppName'))]",
             "[resourceId('Microsoft.Web/Sites/sourcecontrols', variables('funcAppName'), 'web')]",
@@ -433,8 +419,8 @@
             "[resourceId('Microsoft.Web/Sites/', variables('funcAppName'))]"
           ],
           "properties": {
-            "RepoUrl": "[parameters('repositoryUrl')]",
-            "branch": "[parameters('branch')]",
+            "RepoUrl": "[variables('repositoryUrl')]",
+            "branch": "[variables('branch')]",
             "IsManualIntegration": true
           }
         }
